@@ -2,7 +2,12 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import path from 'path';
 import { handleAsyncError, createError } from './errorHandler';
 
-type WorkEntry = CollectionEntry<'works'>;
+type WorkEntry = CollectionEntry<'works'> & {
+  data: {
+    base: string;
+    members?: unknown;
+  };
+};
 
 export const getWorks = async () => {
   return handleAsyncError(
@@ -22,19 +27,29 @@ export const getWorks = async () => {
         const imageSlug = path.basename(item.id);
 
         const work = worksData.find(it => {
-        const baseSlug = path.basename(it.data.base);
-        return baseSlug === imageSlug;
+          const baseSlug = path.basename(it.data.base);
+          return baseSlug === imageSlug;
         });
-        
+
         if (!work) {
-          console.warn(`Work page not found for: ${imageSlug}`);
+          // Dev-only logging without violating ESLint
+          if (import.meta.env.DEV) {
+            // eslint-disable-next-line no-console
+            console.warn(`Work page not found for: ${imageSlug}`);
+          }
           return ans;
         }
 
-          console.log('COMPARE:',
-          'imageSlug =', imageSlug,
-          'works bases =', worksData.map(w => w.data.base)
-        );
+        if (import.meta.env.DEV) {
+          // eslint-disable-next-line no-console
+          console.log(
+            'COMPARE:',
+            'imageSlug =',
+            imageSlug,
+            'works bases =',
+            worksData.map(w => w.data.base)
+          );
+        }
 
         ans.push({
           ...work,
