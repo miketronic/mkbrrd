@@ -11,10 +11,12 @@ export default [
 
   js.configs.recommended,
   {
-    files: ['**/*.{js,ts,tsx}'],
+    files: ['**/*.{ts,tsx}'],
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
+        project: './tsconfig.json',
+        tsconfigRootDir: process.cwd(),
         ecmaVersion: 'latest',
         sourceType: 'module',
       },
@@ -51,6 +53,8 @@ export default [
       parser: astro.parser,
       parserOptions: {
         parser: typescriptParser,
+        project: './tsconfig.json',
+        tsconfigRootDir: process.cwd(),
         extraFileExtensions: ['.astro'],
       },
       globals: {
