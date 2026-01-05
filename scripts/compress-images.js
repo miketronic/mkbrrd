@@ -28,15 +28,17 @@ function ensureDirExists(filePath) {
 
 function findAndMoveMd(dir) {
   const name = path.basename(dir);
+
   fs.readdirSync(dir)
     .filter(file => /\.md$/i.test(file))
     .forEach(file => {
       const fileName = file === 'main.md' ? `${name}.md` : file;
       const filePath = path.join(dir, file);
       const targetPath = path.join(worksPageDir, fileName);
-      console.log(
-        `Page configuration file generated successfully: ${targetPath}`
-      );
+
+      ensureDirExists(targetPath);
+
+      console.log(`Page configuration file generated successfully: ${targetPath}`);
       fs.copyFileSync(filePath, targetPath);
     });
 }

@@ -1,3 +1,5 @@
+console.log('🔥 getWorks.ts LOADED FROM:', import.meta.url);
+
 import { getCollection, type CollectionEntry } from 'astro:content';
 import path from 'path';
 import { handleAsyncError, createError } from './errorHandler';
@@ -5,7 +7,8 @@ import { handleAsyncError, createError } from './errorHandler';
 type WorkEntry = CollectionEntry<'works'> & {
   data: {
     base: string;
-    members?: unknown;
+    members: unknown;
+    imageBasePath: string;
   };
 };
 
@@ -24,32 +27,27 @@ export const getWorks = async () => {
       }
 
       const works = imageInfo.reduce<WorkEntry[]>((ans, item) => {
-        const imageSlug = path.basename(item.id);
+        const imageSlug = path.posix.basename(
+          item.id.replace(/\\/g, '/')
+        );
 
-        const work = worksData.find(it => {
-          const baseSlug = path.basename(it.data.base);
-          return baseSlug === imageSlug;
-        });
+        // ✅ slug safety check (NOW IN SCOPE)
+        if (imageSlug.includes('/') || imageSlug.includes('\\')) {
+          throw new Error(`Invalid slug generated: ${imageSlug}`);
+        }
+
+        const work = worksData.find(
+          it => path.posix.basename(it.data.base) === imageSlug
+        );
 
         if (!work) {
-          // Dev-only logging without violating ESLint
           if (import.meta.env.DEV) {
-            // eslint-disable-next-line no-console
             console.warn(`Work page not found for: ${imageSlug}`);
           }
           return ans;
         }
 
-        if (import.meta.env.DEV) {
-          // eslint-disable-next-line no-console
-          console.log(
-            'COMPARE:',
-            'imageSlug =',
-            imageSlug,
-            'works bases =',
-            worksData.map(w => w.data.base)
-          );
-        }
+        const imageBasePath = `/images/works/${imageSlug}`;
 
         ans.push({
           ...work,
@@ -57,6 +55,7 @@ export const getWorks = async () => {
           data: {
             ...work.data,
             members: item.data,
+            imageBasePath,
           },
         });
 

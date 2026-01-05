@@ -4,6 +4,11 @@ import getWorks from '@/lib/getWorks.ts';
 
 export const getStaticPaths = async () => {
   const works = await getWorks();
+
+  works.forEach(work => {
+    console.log('work.id =', work.id);
+  });
+
   const paths = works.map(work => {
     return {
       params: { work_id: work.id },
