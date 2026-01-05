@@ -1,11 +1,11 @@
 export const siteConfig = {
-  title: 'Khusan Turaev - Lead 2D & 3D Designer',
-  author: 'Khusan Bakhityarovich Turaev',
+  title: 'mike barnoski - keyboard designer and builder',
+  author: 'mike barnoski',
   description:
-    'Lead 2D & 3D Graphic and Motion Designer with 8+ years of experience in visual design, 3D modeling, motion graphics, and brand development.',
-  email: 'elguajo.96@gmail.com',
+    'Cybersecurity by day.  Making things in my spare time.',
+  email: 'mkbrrds@gmail.com',
   lang: 'en-US',
-  site: 'https://khusan-design.uz',
+  site: 'https://mkbrrd.net',
   themes: { dark: 'business', light: 'silk' },
   langs: ['en', 'ru'],
 };
