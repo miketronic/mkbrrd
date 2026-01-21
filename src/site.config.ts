@@ -7,7 +7,7 @@ export const siteConfig = {
   lang: 'en-US',
   site: 'https://mkbrrd.net',
   themes: { dark: 'business', light: 'silk' },
-  langs: ['en', 'ru'],
+  langs: ['en'],
 };
 
 export default siteConfig;
