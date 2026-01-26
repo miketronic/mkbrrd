@@ -3,7 +3,7 @@ export const siteConfig = {
   author: 'mike barnoski',
   description:
     'Cybersecurity by day.  Making things in my spare time.',
-  email: 'mkbrrds@gmail.com',
+  email: 'info@mkbrrd.com',
   lang: 'en-US',
   site: 'https://mkbrrd.net',
   themes: { dark: 'business', light: 'silk' },
