@@ -2,23 +2,23 @@
 const { currentLocale } = Astro;
 const lang =
   {
-    zh: 'zh-CN',
-    'zh-hant': 'zh-HK',
+    en: 'en-US',
   }[currentLocale] || currentLocale;
 ---
 
-<script 
-        src="https://giscus.app/client.js"
+<script src="https://giscus.app/client.js"
         data-repo="miketronic/mkbrrd"
         data-repo-id="R_kgDOQyuByQ"
+        data-category="Website Comments"
         data-category-id="DIC_kwDOQyuByc4C1dih"
-        data-mapping="pathname"
+        data-mapping="title"
         data-strict="0"
-        data-reactions-enabled="1"
+        data-reactions-enabled="0"
         data-emit-metadata="0"
-        data-input-position="bottom"
+        data-input-position="top"
         data-theme="preferred_color_scheme"
         data-lang="en"
+        data-loading="lazy"
         crossorigin="anonymous"
         async>
 </script>
