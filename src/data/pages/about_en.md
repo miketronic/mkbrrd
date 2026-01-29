@@ -6,10 +6,14 @@ name: 'about'
 
 Hi — I’m Mike, and I build keyboards for people who care how things *feel*.
 
-By day, I work as a cybersecurity engineer. By night (and weekends… and probably too late into the night), I design and build custom mechanical keyboards under the name **MKbrrd**.  MK could mean Mechanical Key...board, or a combination of “MiKe” + a silly way of saying “board” - either way there you go 😄.
+By day, I work as a cybersecurity engineer. By night (and weekends… and probably too late into \
+  the night), I design and build custom mechanical keyboards under the name **MKbrrd**.  MK could \
+  mean Mechanical Key...board, or a combination of “MiKe” + a silly way of saying “board” - either \
+  way there you go 😄.
 
-What started as a hobby -- testing switches, playing with circuit and 3d design tools, and obsessing over layout and sound -- slowly turned into something more:  
-a small workshop where keyboards are treated like tools *and* art.
+What started as a hobby -- testing switches, playing with circuit and 3d design tools, and \
+  obsessing over layout and sound -- slowly turned into something more: \
+  a small workshop where keyboards are treated like tools *and* art.
 
 ---
 
