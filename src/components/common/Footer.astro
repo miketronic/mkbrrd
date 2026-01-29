@@ -12,19 +12,37 @@ const year = new Date().getFullYear();
 <footer class={clsx("bg-unset text-center py-12", className)}>
   <div class="max-w-4xl mx-auto px-4">
     <p class="mb-2">
-      <a class="hover:underline" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">{shows['icp']}</a>
+      <a class="hover:underline" href="https://mkbrrd.net/" target="_blank" rel="noopener noreferrer">{shows['icp']}</a>
       <span>&copy; {year}
         <a class="hover:underline" href={siteUrl}>{siteName}.</a>
         {shows['cr']}
       </span>
+        <li style="display: inline;">
+          <a 
+            href="https://www.instagram.com/mkbrrd/"
+            class="hover:text-accent hover:underline
+            style="color: #000; text-decoration: none; "
+            >instagram</a>
+          <a
+            style="color: #777; text-decoration: none; "
+            >-≡-</a>
+          <a 
+            href="https://www.facebook.com/mkbrrd/"
+            class="hover:text-accent hover:underline
+            style="color: #712; text-decoration: none; "
+            >facebook</a>
+          <a
+            style="color: #777; text-decoration: none; "
+            >-≡-</a>
+          <a
+            href="https://x.com/mkbrrd"
+            class="hover:text-accent hover:underline
+            style="color: #777; text-decoration: none; "
+            >𝕏 @mkbrrd
+          </a>
+        </li>
+        <br>
     </p>
-    {Array.isArray(links) && links.length && <div class="space-x-4 text-sm">
-      {
-        links.map(link => <a
-          href={link.href}
-          class="hover:text-accent hover:underline transition-colors"
-        >{link.label}</a>)
-      }
-    </div>}
+    </div>
   </div>
 </footer>
