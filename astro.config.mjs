@@ -49,34 +49,6 @@ export default defineConfig({
           safari10: true, // Fix Safari 10 issues
         },
       },
-      rollupOptions: {
-        output: {
-          // Optimize chunk naming for better caching
-          chunkFileNames: 'assets/[name]-[hash].js',
-          entryFileNames: 'assets/[name]-[hash].js',
-          assetFileNames: 'assets/[name]-[hash].[ext]',
-          manualChunks: {
-            // Core React libraries
-            'react-vendor': ['react', 'react-dom'],
-            // UI component libraries
-            'ui-vendor': ['@heroui/react', '@heroicons/react'],
-            // Animation libraries
-            'animation-vendor': ['framer-motion', 'keen-slider', 'canvas-confetti'],
-            // Utility libraries
-            'utils-vendor': ['clsx', 'tailwind-merge', 'dayjs', 'lodash'],
-            // Icon libraries
-            'icons-vendor': ['@iconify/react', 'lucide-react'],
-            // Image processing
-            'image-vendor': ['sharp', '@resvg/resvg-js'],
-            // Internationalization
-            'i18n-vendor': ['i18next', 'astro-i18n'],
-            // Markdown processing
-            'markdown-vendor': ['mdast-util-to-string', 'reading-time'],
-            // Other utilities
-            'misc-vendor': ['qrcode', 'satori', 'satori-html'],
-          },
-        },
-      },
     },
     plugins: [
       svgr({
