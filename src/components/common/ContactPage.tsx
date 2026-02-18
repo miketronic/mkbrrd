@@ -64,7 +64,7 @@ export default function Contact() {
 
           <a 
             href="https://www.instagram.com/mkbrrd/"
-            class="hover:text-accent hover:underline
+            className="hover:text-accent hover:underline
             "
             >instagram</a>
           <a
@@ -72,7 +72,7 @@ export default function Contact() {
             > - - - </a>
           <a 
             href="https://www.facebook.com/mkbrrd/"
-            class="hover:text-accent hover:underline
+            className="hover:text-accent hover:underline
             "
             >facebook</a>
           <a
@@ -80,7 +80,7 @@ export default function Contact() {
             > - - - </a>
           <a
             href="https://x.com/mkbrrd"
-            class="hover:text-accent hover:underline
+            className="hover:text-accent hover:underline
             "
             >𝕏 @mkbrrd
           </a>
