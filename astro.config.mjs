@@ -1,6 +1,7 @@
 // @ts-check
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'astro/config';
+import netlify from '@astrojs/netlify';
 import tailwindcss from '@tailwindcss/vite';
 import svgr from 'vite-plugin-svgr';
 import sitemap from '@astrojs/sitemap';
@@ -16,6 +17,8 @@ import vtbot from 'astro-vtbot';
 import alpinejs from '@astrojs/alpinejs';
 // https://astro.build/config
 export default defineConfig({
+  output: 'server',
+  adapter: netlify(),
   site: siteConfig.site,
   devToolbar: {
     enabled: false,

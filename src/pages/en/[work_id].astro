@@ -2,17 +2,16 @@
 import App from '@/components/pages/detail.astro';
 import getWorks from '@/lib/getWorks.ts';
 
-export const getStaticPaths = async () => {
-  const works = await getWorks();
-  const paths = works.map(work => {
-    return {
-      params: { work_id: work.id },
-      props: { work },
-    };
-  });
+export const prerender = false;
 
-  return paths;
-};
+const { work_id } = Astro.params;
+
+const works = await getWorks();
+const work = works.find((w) => w.id === work_id);
+
+if (!work) {
+  throw new Error(`Work not found: ${work_id}`);
+}
 ---
 
-<App {...Astro.props} />
+<App work={work} />

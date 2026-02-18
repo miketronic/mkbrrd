@@ -115,3 +115,6 @@ website/
 # Local development
 .env.local
 DesignPhotographyPortfolio.code-workspace
+
+# Local Netlify folder
+.netlify

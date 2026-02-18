@@ -2,22 +2,20 @@
 import App from '@/components/pages/detail.astro';
 import getWorks from '@/lib/getWorks.ts';
 
-export const getStaticPaths = async () => {
-  const works = await getWorks();
+export const prerender = false; // keeps this page static if you use hybrid
 
-  works.forEach(work => {
-    console.log('work.id =', work.id);
-  });
+const { work_id } = Astro.params;
 
-  const paths = works.map(work => {
-    return {
-      params: { work_id: work.id },
-      props: { work },
-    };
-  });
+if (!Astro.props.work) {
+  return Astro.redirect("/404");
+}
 
-  return paths;
-};
+const works = await getWorks();
+const work = works.find((w) => w.id === work_id);
+
+if (!work) {
+  throw new Error(`Work not found: ${work_id}`);
+}
 ---
 
-<App {...Astro.props} />
+<App work={work} />

@@ -29,8 +29,8 @@ export const getMenus = (textMap, locale) => {
     },
     {
       label: textMap['contact'],
-      href: `mailto:${siteConfig.email}`,
-      isActive: path => false,
+      href: getHref('/contact/'),
+      isActive: checkActive('\/contact\/?$'),
       hasAnimate,
       // icon: 'icon-[mdi--contact-mail]',
     },
