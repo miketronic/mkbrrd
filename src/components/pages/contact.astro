@@ -1,6 +1,6 @@
 ---
-import Giscus from '@/components/common/Giscus.astro';
 import Layout from '@/layouts/PageLayout.astro';
+import ContactPage from '@/components/common/ContactPage.tsx';
 import { getEntry, render } from 'astro:content';
 
 import { getI18n } from '@/i18n/index';
@@ -11,27 +11,26 @@ const { currentLocale } = Astro;
 const i18n = await getI18n(currentLocale || 'en', 'design');
 
 const mates = {
-  title: i18n('menus.about'),
+  title: i18n('menus.contact'),
   description: i18n('mate.description'),
   author: siteConfig.author,
   email: siteConfig.email,
   local: currentLocale,
   ogImage: getRelativeLocaleUrl(currentLocale || 'en', '/og-image/site-image.png'),
 };
-const about = await getEntry('pages', ['about', currentLocale].join('_'));
 
-if (!about) {
-  throw new Error(`About page not found for locale: ${currentLocale}`);
+const contact = await getEntry('pages', ['contact', currentLocale].join('_'));
+
+if (!contact) {
+  throw new Error(`Contact page not found for locale: ${currentLocale}`);
 }
 
-const { Content } = await render(about);
+const { Content } = await render(contact);
 ---
 
 <Layout {...mates}>
-  <div
-    class="prose prose-tao dark:prose-invert mx-auto w-[90%] md:w-[80%] xl:w-[70%] pt-20"
-  >
+  <div class="prose prose-tao dark:prose-invert mx-auto w-[90%] md:w-[80%] xl:w-[70%] pt-20">
     <Content />
-    <Giscus />
+    <ContactPage />
   </div>
 </Layout>
