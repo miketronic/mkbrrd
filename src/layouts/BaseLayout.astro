@@ -63,7 +63,6 @@ const seoConfig = {
   <ClientRouter />
 </head>
 	<body class:list={["break-all bg-[initial]", className]}>
-    {hasCursor && <CursorCircle />}
 		<slot />
 		<BrakePad duration={2000} />
     <div class={import.meta.env.MODE === 'development' ? 'fixed top-0 left-0 text-[red] z-999' : 'sr-only'}>
