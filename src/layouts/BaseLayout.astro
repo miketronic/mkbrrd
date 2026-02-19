@@ -1,51 +1,79 @@
 ---
-import Layout from '@hdud/common/layouts/BaseLayout.astro';
-import '@/styles/global.css';
----
+import BrakePad from 'astro-vtbot/components/BrakePad.astro';
+import { ClientRouter } from 'astro:transitions';
 
-<Layout {...Astro.props}>
-  <!-- Preload critical resources -->
-  <Fragment slot="head">
-    <!-- Preload critical CSS -->
-    <link rel="preload" href="/styles/global.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/styles/global.css"></noscript>
-    
-    <!-- Preload logo -->
-    <link rel="preload" href="/images/hdud-logo.svg" as="image" type="image/svg+xml">
-    
-    <!-- Preload favicon -->
-    <link rel="preload" href="/favicon/favicon-192x192.png" as="image" type="image/png">
-    <link rel="preload" href="/favicon/favicon-512x512.png" as="image" type="image/png">
-    
-    <!-- Preload critical fonts if any -->
-    <!-- <link rel="preload" href="/fonts/custom.woff2" as="font" type="font/woff2" crossorigin> -->
-    
-    <!-- DNS prefetch for external domains -->
-    <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
-  </Fragment>
-  
-  <slot />
-</Layout>
-
-<script>
-  // Register Service Worker for caching
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then((registration) => {
-          console.log('Service Worker registered successfully:', registration.scope);
-        })
-        .catch((error) => {
-          console.log('Service Worker registration failed:', error);
-        });
-    });
+const {
+	title,
+	description,
+	author,
+	email,
+	local = 'zh',
+	ogType = 'website',
+	ogArticle = {},
+	ogImage,
+	hasCursor = true,
+	shortTitle,
+	class: className,
+} = Astro.props;
+const seoConfig = {
+  title,
+  titleTemplate: `%s${shortTitle ? ' - ' + shortTitle : ''}`,
+  titleDefault: shortTitle,
+  description,
+  charset: "UTF-8",
+  openGraph: {
+    basic: {
+      title,
+      type: ogType,
+      image: ogImage,
+    },
+    article: ogType === 'article' ? ogArticle : undefined,
+  },
+  extend: {
+    link: [
+      { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon/favicon-16x16.png" },
+      { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon/favicon-32x32.png" },
+      { rel: "icon", type: "image/png", sizes: "192x192", href: "/favicon/favicon-192x192.png" },
+      { rel: "icon", type: "image/png", sizes: "512x512", href: "/favicon/favicon-512x512.png" },
+      { rel: "icon", type: "image/svg+xml", href: "/favicon/favicon.svg" },
+      { rel: "apple-touch-icon", type: "image/png", sizes: "180x180", href: "/favicon/favicon-180x180.png" },
+      { rel: "sitemap", href: "/sitemap-index.xml" },
+    ],
+    meta: [
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "msapplication-TileColor", content: "#333333" },
+      { name: "theme-color", content: "#fdfaf6" },
+      author && { name: "author", content: author },
+      email && { name: "email", content: email },
+    ].filter(it => it),
   }
-
-  // Initialize performance monitoring
-  import('/src/lib/performance.js').then((module: any) => {
-    module.initPerformanceMonitoring();
-  }).catch((error) => {
-    console.warn('Failed to load performance monitoring:', error);
-  });
-</script>
+}
+---
+<!doctype html>
+<html
+  lang={local}
+  transition:name="root"
+  transition:animate="none"
+>
+<head>
+  <script type="module">
+    import cowsay_random from '../libs/cowsay';
+    window.cowsay_random = cowsay_random;
+  </script>
+  <ClientRouter />
+</head>
+	<body class:list={["break-all bg-[initial]", className]}>
+    {hasCursor && <CursorCircle />}
+		<slot />
+		<BrakePad duration={2000} />
+    <div class={import.meta.env.MODE === 'development' ? 'fixed top-0 left-0 text-[red] z-999' : 'sr-only'}>
+      <div id="bp-default" class="block sm:hidden">default</div>
+      <div id="bp-sm" class="hidden sm:block md:hidden">sm</div>
+      <div id="bp-md" class="hidden md:block lg:hidden">md</div>
+      <div id="bp-lg" class="hidden lg:block xl:hidden">lg</div>
+      <div id="bp-xl" class="hidden xl:block 2xl:hidden">xl</div>
+      <div id="bp-2xl" class="hidden 2xl:block">2xl</div>
+    </div>
+		<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+	</body>
+</html>
