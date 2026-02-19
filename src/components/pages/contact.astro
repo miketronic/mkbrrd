@@ -1,34 +1,8 @@
----
-import Layout from '@/layouts/PageLayout.astro';
-import ContactPage from '@/components/common/ContactPage';
-import { getEntry, render } from 'astro:content';
-
-import { getI18n } from '@/i18n/index';
-import { getRelativeLocaleUrl } from 'astro:i18n';
-import { siteConfig } from '@/site.config';
-
-const { currentLocale } = Astro;
-const i18n = await getI18n(currentLocale || 'en', 'design');
-
-const mates = {
-  title: i18n('menus.about'),
-  description: i18n('mate.description'),
-  author: siteConfig.author,
-  email: siteConfig.email,
-  local: currentLocale,
-  ogImage: getRelativeLocaleUrl(currentLocale || 'en', '/og-image/site-image.png'),
-};
-
----
-
-<Layout
-  title="Contact Us - MKBRRD"
-  description="Have questions or feedback about our custom keyboards? We'd love to hear from you."
-  canonicalPath="/contact"
->
+<Layout {...mates}>
   <div
     class="prose prose-tao dark:prose-invert mx-auto w-[90%] md:w-[80%] xl:w-[70%] pt-20"
   >
-    <ContactPage client:only="react" />
+    <h1>Contact</h1>
+    <p>This is the contact page.</p>
   </div>
 </Layout>
