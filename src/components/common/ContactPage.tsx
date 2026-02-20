@@ -33,21 +33,6 @@ export default function ContactPage() {
     <div className="from-primary/5 via-background to-secondary/5 min-h-screen bg-gradient-to-br p-6">
       <div className="mx-auto max-w-2xl">
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
-          <a href="/">
-            <button
-              data-testid="button-back-contact"
-              className="hover:bg-secondary/20 mb-4 rounded-full p-2 transition-colors"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </button>
-          </a>
-        </motion.div>
-
-        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
