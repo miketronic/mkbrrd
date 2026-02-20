@@ -1,0 +1,55 @@
+---
+const { text = "", className = "" } = Astro.props;
+const alpineData = ((text) => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()';
+
+  return {
+    text: text.split(""),
+    chars: text.split(""),
+    interval: null,
+
+    init() {
+      this.chars = this.text.slice();
+    },
+
+    randomChar() {
+      return chars[Math.floor(Math.random() * chars.length)];
+    },
+
+    clear() {
+      if (this.interval) clearInterval(this.interval);
+      this.init();
+    },
+
+    start() {
+      this.clear();
+      let frame = 0;
+      const onetime = Math.round(500 / this.text.length);
+
+      this.interval = setInterval(() => {
+        this.chars = this.text.map((ch, i) => {
+          if (ch === " ") return " "; // 保持空格
+          return this.randomChar();
+        });
+
+        frame++;
+
+        if (frame >= this.text.length) {
+          this.clear();
+          this.chars = this.text.slice();
+        }
+      }, onetime);
+    }
+  }
+}).toString();
+---
+
+<span 
+  x-data={`(${alpineData})("${text}")`}
+  x-init="init()" 
+  class={`inline-block ${className}`}
+  x-on:mouseenter="start()"
+  x-on:mouseleave="clear()"
+>
+  <span class="font-mono" x-text="chars.join('')"></span>
+</span>

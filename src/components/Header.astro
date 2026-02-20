@@ -1,0 +1,48 @@
+---
+import HeaderMenus from './HeaderMenus.astro';
+import ThemeToggle from './ThemeToggle.astro';
+const { themes, langs, locale, menus = [], class: className, pathname = Astro.url.pathname } = Astro.props;
+---
+<div
+  class:list={[
+    "navbar bg-base-100 min-h-auto shadow-[0_1px_0px_0px_rgba(0,0,0,0.1)] px-2 md:px-6 xl:px-10 py-2 max-w-[1400px] mx-auto justify-between",
+    className
+  ]}
+>
+  <div class="navbar-start w-max flex-1">
+    <div class="dropdown">
+      <div tabindex="0" role="button" class="btn btn-ghost md:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+      </div>
+      <ul
+        tabindex="0"
+        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-max p-2 shadow">
+        <HeaderMenus
+          menus={menus}
+          pathname={pathname}
+          type="small"
+        />
+      </ul>
+    </div>
+    <a href="/"><slot /></a>
+  </div>
+  <div class="flex navbar-center w-max">
+    <slot name='center' />
+  </div>
+  <div class="flex navbar-end w-max flex-1">
+    <div class="hidden md:flex">
+      <ul class="menu menu-horizontal px-1 py-0">
+        <HeaderMenus
+          menus={menus}
+          pathname={pathname}
+        />
+      </ul>
+    </div>
+    <div class:list={[
+      "divider divider-horizontal max-md:hidden md:m-2 lg:m-3 w-1! lg:w-2!",
+    ]}/>
+    <div class="flex items-center gap-1 xl:gap-2">
+      <ThemeToggle themes={themes} />
+    </div>
+  </div>
+</div>

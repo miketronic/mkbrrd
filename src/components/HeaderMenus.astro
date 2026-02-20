@@ -1,0 +1,33 @@
+---
+import ScrambleText from './ScrambleText.astro';
+
+const { menus, pathname, type } = Astro.props;
+---
+{
+  menus.map((link, idx) => {
+    const isActive = link.isActive(pathname);
+    return (
+      <li class:list={[{
+        'text-[#aaa]': !isActive,
+        'text-[#333]': isActive,
+        'dark:text-[#eee]': isActive,
+      }, 'hover:text-[#333] dark:hover:text-[#eee]']}>
+        <a
+          href={isActive ? 'javascript:null' : link.href}
+          class="md:text-md lg:text-lg md:px-2 lg:px-3"
+          astro-prefetch="true"
+        >
+          {link.icon && <span
+            class:list={[
+              link.icon,
+              {
+                'max-lg:hidden': type !== 'small',
+              }
+            ]}
+          />}
+          {link.hasAnimate ? <ScrambleText text={link.label}/> : link.label}
+        </a>
+      </li>
+    )
+  })
+}
