@@ -12,10 +12,10 @@ const { works } = Astro.props;
 <div class="gap-1 columns-2 sm:columns-3 xl:columns-4">
   {
     works.map(work => (
-      <a
-        href={`/${work.id}`}
-        class="group block overflow-hidden mb-1 shadow-xl relative"
-      >
+        <a
+          href={`/works/${work.id}`}
+          class="group block overflow-hidden mb-1 shadow-xl relative"
+        >
         <Image
           client:load
           src={`${work.data.base}/main`}

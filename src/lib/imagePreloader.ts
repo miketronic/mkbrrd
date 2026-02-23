@@ -86,17 +86,24 @@ export function preloadImages(
 }
 
 /**
- * Preload images with different formats (WebP, AVIF, fallback)
+ * Preload images with supported formats (AVIF, WebP)
  */
+let supportsAvif: boolean | null = null;
+
+function detectAvifSupport() {
+  if (supportsAvif !== null) return supportsAvif;
+  const canvas = document.createElement('canvas');
+  supportsAvif = canvas.toDataURL('image/avif').startsWith('data:image/avif');
+  return supportsAvif;
+}
+
 export function preloadImageFormats(
   baseSrc: string,
   options: PreloadOptions = {}
 ): Promise<PreloadResult[]> {
-  const formats = [
-    `${baseSrc}.avif`,
-    `${baseSrc}.webp`,
-    `${baseSrc}.jpg`, // fallback
-  ];
+  const formats = detectAvifSupport()
+    ? [`${baseSrc}.avif`, `${baseSrc}.webp`]
+    : [`${baseSrc}.webp`];
 
   return preloadImages(formats, options);
 }
@@ -109,19 +116,19 @@ export function preloadGalleryImages(
   images: string[],
   options: PreloadOptions = {}
 ): Promise<PreloadResult[]> {
-  const toPreload: string[] = [];
-  
-  // Preload next image
+  const bases: string[] = [];
+
   if (currentIndex + 1 < images.length) {
-    toPreload.push(images[currentIndex + 1]);
-  }
-  
-  // Preload previous image
-  if (currentIndex - 1 >= 0) {
-    toPreload.push(images[currentIndex - 1]);
+    bases.push(images[currentIndex + 1]);
   }
 
-  return preloadImages(toPreload, options);
+  if (currentIndex - 1 >= 0) {
+    bases.push(images[currentIndex - 1]);
+  }
+
+  return Promise.all(
+    bases.map(base => preloadImageFormats(base, options))
+  ).then(results => results.flat());
 }
 
 /**

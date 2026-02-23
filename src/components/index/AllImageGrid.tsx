@@ -22,15 +22,19 @@ export default function App({ members }: AppProps) {
   const [current, setCurrent] = useState<number | undefined>();
 
   // Memoize processed members data to avoid recalculation
-  const processedMembers = useMemo(() => {
-    return mems.map(member => ({
+const processedMembers = useMemo(() => {
+  return mems.map(member => {
+    const baseSrc = member.name; // already correct path
+
+    return {
       ...member,
       aspectRatio: member.width / member.height,
-      // Pre-calculate optimized image paths
-      webpSrc: `${member.name}.webp`,
-      avifSrc: `${member.name}.avif`,
-    }));
-  }, [mems]);
+      baseSrc,
+      webpSrc: `${baseSrc}.webp`,
+      avifSrc: `${baseSrc}.avif`,
+    };
+  });
+}, [mems]);
   const refresh = useCallback(
     _debounce(
       () => {
@@ -49,7 +53,7 @@ export default function App({ members }: AppProps) {
         
         // Preload adjacent images when navigating
         if (isOpen) {
-          const imageSrcs = processedMembers.map(member => member.name);
+          const imageSrcs = processedMembers.map(member => member.baseSrc);
           preloadGalleryImages(value, imageSrcs, { priority: 'high' });
         }
       },
@@ -111,7 +115,7 @@ export default function App({ members }: AppProps) {
         >
           <Image
             imageInfo={mem}
-            src={mem.name}
+            src={processedMembers[idx].baseSrc}
             lazy={true}
             preloadOnHover={true}
             classNames={{
@@ -124,7 +128,7 @@ export default function App({ members }: AppProps) {
               onOpen();
               
               // Preload adjacent images when opening modal
-              const imageSrcs = processedMembers.map(member => member.name);
+              const imageSrcs = processedMembers.map(member => member.baseSrc);
               preloadGalleryImages(idx, imageSrcs, { priority: 'high' });
             }}
           />
@@ -171,11 +175,11 @@ export default function App({ members }: AppProps) {
                 {current !== undefined && (
                   <>
                     <source
-                      srcSet={processedMembers[current].avifSrc}
+                      src={processedMembers[current].avifSrc}
                       type="image/avif"
                     />
                     <source
-                      srcSet={processedMembers[current].webpSrc}
+                      src={processedMembers[current].webpSrc}
                       type="image/webp"
                     />
                     <img

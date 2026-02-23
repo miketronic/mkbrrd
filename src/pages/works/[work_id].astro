@@ -2,20 +2,15 @@
 import App from '@/components/pages/detail.astro';
 import getWorks from '@/lib/getWorks.ts';
 
-export const prerender = false; // keeps this page static if you use hybrid
+export const prerender = false;
 
 const { work_id } = Astro.params;
-
-if (!Astro.props.work) {
-  return Astro.redirect("/404");
-}
 
 const works = await getWorks();
 const work = works.find((w) => w.id === work_id);
 
 if (!work) {
-  throw new Error(`Work not found: ${work_id}`);
+  return Astro.redirect("/404");
 }
 ---
-
 <App work={work} />

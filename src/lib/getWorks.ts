@@ -47,7 +47,7 @@ export const getWorks = async () => {
           return ans;
         }
 
-        const imageBasePath = `/images/works/${imageSlug}`;
+        const imageBasePath = imageSlug;
 
         ans.push({
           ...work,

@@ -1,21 +1,15 @@
 ---
-import { getRelativeLocaleUrl } from 'astro:i18n';
 import HdudHeader from '@/components/Header.astro';
 import siteConfig from '@/site.config';
-import { getI18n } from '@/i18n/index';
 import { getMenus } from '@/config/menus';
 
-const { currentLocale } = Astro;
-const i18n = await getI18n(currentLocale || 'en', 'design');
-
 function getTargetUrl() {
-  const lang = currentLocale === 'ja' ? 'en' : currentLocale;
-  return getRelativeLocaleUrl(lang || 'en', '/');
+  return '/';
 }
 ---
 
 <HdudHeader
-  menus={getMenus(i18n('menus'), currentLocale || 'en')}
+  menus={getMenus()}
   class="max-w-none"
   themes={siteConfig.themes}
 >
@@ -27,9 +21,11 @@ function getTargetUrl() {
         class="size-8 md:size-10 xl:size-12 h-auto"
       />
     </a>
-    <span class="max-md:hidden text-md max-md:text-xl xl:text-xl">MKBRRD Keyboards</span
-    >
+    <span class="max-md:hidden text-md max-md:text-xl xl:text-xl">
+      MKBRRD Keyboards
+    </span>
   </div>
+
   <div class="flex items-center gap-2" slot="center">
     <a href={getTargetUrl()} class="md:hidden xl:block">
       <img
@@ -38,6 +34,8 @@ function getTargetUrl() {
         class="size-8 md:size-10 xl:size-12 h-auto"
       />
     </a>
-    <span class="md:hidden text-md xl:text-xl">MKBRRD Keyboards</span>
+    <span class="md:hidden text-md xl:text-xl">
+      MKBRRD Keyboards
+    </span>
   </div>
 </HdudHeader>

@@ -3,16 +3,11 @@ import CustomFloatBtns from '@/components/common/CustomFloatBtns.astro';
 import PageLayout from '@/layouts/PageLayout.astro';
 import MemberGrid from '@/components/index/AllImageGrid.tsx';
 import { getCollection } from 'astro:content';
-import { getI18n } from '@/i18n/index';
-import { getRelativeLocaleUrl } from 'astro:i18n';
 import { siteConfig } from '@/site.config';
-
-const { currentLocale } = Astro;
-const i18n = await getI18n(currentLocale || 'en', 'design');
 
 const imageInfo = await getCollection('imageInfo');
 const members = imageInfo
-  .reduce((ans: Array<{name: string, width: number, height: number}>, item) => {
+  .reduce((ans: Array<{ name: string; width: number; height: number }>, item) => {
     return [
       ...ans,
       ...Object.entries(item.data).map(([it, info]) => ({
@@ -23,13 +18,13 @@ const members = imageInfo
     ];
   }, [])
   .sort(() => Math.random() - 0.5);
+
 const mates = {
-  title: i18n('menus.all'),
-  description: i18n('mate.description'),
+  title: 'All Works',
+  description: siteConfig.description,
   author: siteConfig.author,
   email: siteConfig.email,
-  local: currentLocale,
-  ogImage: getRelativeLocaleUrl(currentLocale || 'en', '/og-image/site-image.png'),
+  ogImage: '/og-image/site-image.png',
 };
 ---
 
@@ -39,7 +34,7 @@ const mates = {
     btns={[
       {
         type: 'top',
-        label: i18n('btns.backToTop'),
+        label: 'Back to top',
       },
     ]}
   />

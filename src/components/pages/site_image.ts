@@ -2,22 +2,13 @@ import { siteConfig } from '@/site.config';
 import { Resvg } from '@resvg/resvg-js';
 import satori, { type SatoriOptions } from 'satori';
 import { html } from 'satori-html';
-import { getI18n } from '@/i18n/index';
-
-const getLang = (pathname: string): string => {
-  for (const lang of ['en', 'ru']) {
-    if (pathname.indexOf(`/${lang}/`) === 0) return lang;
-  }
-  return 'en';
-};
 
 const ogOptions: SatoriOptions = {
-  // Use default fonts since Inter font is not available
   height: 630,
   width: 1200,
 };
 
-const markup = (i18n: any) =>
+const markup = () =>
   html`<div tw="flex flex-col w-full h-full bg-[#1d1f21] text-[#c9cacc]">
     <div
       tw="flex items-end justify-start w-full p-10 text-xl border-b border-[#2bbc89]"
@@ -25,12 +16,10 @@ const markup = (i18n: any) =>
       <svg
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
         x="0px"
         y="0px"
         width="80px"
         viewBox="0 0 1000 1000"
-        enable-background="new 0 0 1000 1000"
         xml:space="preserve"
       >
         <path
@@ -39,7 +28,7 @@ const markup = (i18n: any) =>
           stroke-width="30"
           stroke-miterlimit="10"
           d="M982.021,418.117
-		      c0,266.215-215.813,482.022-482.025,482.022c-266.212,0-482.021-215.807-482.021-482.022"
+          c0,266.215-215.813,482.022-482.025,482.022c-266.212,0-482.021-215.807-482.021-482.022"
         />
         <path
           fill="none"
@@ -47,7 +36,7 @@ const markup = (i18n: any) =>
           stroke-width="30"
           stroke-miterlimit="10"
           d="M345.601,745.744
-		      c-180.942,0-327.625-146.686-327.625-327.626c0-180.942,146.683-327.625,327.625-327.625"
+          c-180.942,0-327.625-146.686-327.625-327.626c0-180.942,146.683-327.625,327.625-327.625"
         />
         <path
           fill="none"
@@ -55,9 +44,8 @@ const markup = (i18n: any) =>
           stroke-width="30"
           stroke-miterlimit="10"
           d="M654.396,90.493
-		      c180.942,0,327.625,146.682,327.625,327.624S835.339,745.742,654.396,745.742"
+          c180.942,0,327.625,146.682,327.625,327.624S835.339,745.742,654.396,745.742"
         />
-
         <line
           fill="none"
           stroke="#F39800"
@@ -68,7 +56,6 @@ const markup = (i18n: any) =>
           x2="654.396"
           y2="436.191"
         />
-
         <line
           fill="none"
           stroke="#F39800"
@@ -79,7 +66,6 @@ const markup = (i18n: any) =>
           x2="669.346"
           y2="77.293"
         />
-
         <line
           fill="none"
           stroke="#F39800"
@@ -91,11 +77,14 @@ const markup = (i18n: any) =>
           y2="82.033"
         />
       </svg>
-      <p tw="ml-3 font-semibold">${i18n('mate.title')}</p>
+
+      <p tw="ml-3 font-semibold">${siteConfig.title}</p>
     </div>
+
     <div class="flex flex-1 p-10 flex-col text-4xl">
-      <p>${i18n('mate.description')}</p>
+      <p>${siteConfig.description}</p>
     </div>
+
     <div class="flex p-10 flex-col text-4xl">
       <p class="flex justify-end">
         By: ${siteConfig.author} (${siteConfig.site})
@@ -103,10 +92,10 @@ const markup = (i18n: any) =>
     </div>
   </div>`;
 
-export default async function (context: any) {
-  const i18n = await getI18n(getLang(context.url.pathname), 'design');
-  const svg = await satori(markup(i18n) as any, ogOptions);
+export default async function () {
+  const svg = await satori(markup() as any, ogOptions);
   const png = new Resvg(svg).render().asPng();
+
   return [
     png,
     {

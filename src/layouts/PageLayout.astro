@@ -3,12 +3,9 @@ import Header from '@/components/common/Header.astro';
 import Footer from '@/components/common/Footer.astro';
 import BaseLayout from './BaseLayout.astro';
 import { slide } from 'astro:transitions';
-import { getI18n } from '@/i18n/index';
 import { getMenus } from '@/config/menus';
 
-const { currentLocale } = Astro;
-const i18n = await getI18n(currentLocale, 'design');
-const links = getMenus(i18n('menus'), currentLocale);
+const links = getMenus();
 ---
 
 <BaseLayout {...Astro.props}>
@@ -19,5 +16,5 @@ const links = getMenus(i18n('menus'), currentLocale);
   >
     <slot />
   </div>
-  <Footer shows={i18n('footer')} links={links} />
+  <Footer links={links} />
 </BaseLayout>

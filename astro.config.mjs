@@ -23,13 +23,6 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
-  i18n: {
-    locales: siteConfig.langs,
-    defaultLocale: 'en',
-    routing: {
-      prefixDefaultLocale: false,
-    },
-  },
   vite: {
     optimizeDeps: {
       exclude: ['@resvg/resvg-js'],
