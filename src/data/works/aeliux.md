@@ -1,7 +1,6 @@
 ---
 base: '/images/works/aeliux'
 ---
-**website: https://mkbrrd.net/**
 
 AELIUX
 

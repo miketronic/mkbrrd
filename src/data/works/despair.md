@@ -1,8 +1,7 @@
 ---
 base: '/images/works/despair'
 ---
-**website: https://mkbrrd.net/**
 
 Despair
 
-Dual trackball keyboard
+QMK and Vial dual trackball keyboard

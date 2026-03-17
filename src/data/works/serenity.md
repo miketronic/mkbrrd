@@ -1,8 +1,7 @@
 ---
 base: '/images/works/serenity'
 ---
-**website: https://mkbrrd.net/**
 
 Serenity
 
-Dual trackball keyboard
+QMK and Vial dual trackball keyboard
